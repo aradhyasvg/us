@@ -13,10 +13,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Allow scrolling by changing height to min-height */
             min-height: 100vh;
             margin: 0;
-            padding: 40px 0; /* Add padding for scroll space */
+            padding: 40px 0;
             flex-direction: column;
         }
 
@@ -106,19 +105,69 @@
             font-size: 1.5rem; color: #5c6bc0; text-align: center;
         }
 
-        .spotify-container {
+        .flower-border-frame {
+            position: relative;
+            padding: 30px;
+            border: 2px dashed rgba(255, 105, 180, 0.4);
+            border-radius: 25px;
             margin-top: 40px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            /* Adjust width to be responsive */
-            width: 90%;
-            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background-color: rgba(255, 255, 255, 0.7);
+            width: fit-content;
+            max-width: 90%;
         }
+
+        .flower-emoji-border {
+            position: absolute;
+            font-size: 2.5rem;
+            pointer-events: none;
+            z-index: 10;
+        }
+        #flower-top-left { top: -20px; left: -20px; transform: rotate(-15deg); }
+        #flower-top-right { top: -20px; right: -20px; transform: rotate(15deg); }
+        #flower-bottom-left { bottom: -20px; left: -20px; transform: rotate(15deg); }
+        #flower-bottom-right { bottom: -20px; right: -20px; transform: rotate(-15deg); }
+
+        .spotify-container {
+            margin-top: 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .spotify-container iframe {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* --- STYLES FOR NOSTALGIA VIDEO SECTION --- */
+        .nostalgia-section {
+            width: 100%;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .nostalgia-title {
+            font-size: 2rem;
+            color: #5c6bc0;
+            margin-bottom: 25px;
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Space between the videos */
+            flex-wrap: wrap; /* This makes it responsive! */
+        }
+        .video-player {
+            width: 100%;
+            max-width: 400px; /* Adjust size as needed */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+
     </style>
 </head>
-<body style="background-color: pink;">
-
+<body style="background-color: rgba(255, 126, 147, 0.881);">
     <button id="revealButton">For my love...</button>
 
     <div id="mainContent">
@@ -129,12 +178,27 @@
             </div>
             <div class="heart-symbol">♥</div>
         </div>
-        <p class="caption">playlist that speaks about us</p>
+        <p class="caption">Move your mouse over our worlds.</p>
 
-        <div class="spotify-container">
-            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1xDLSS7UCJ7LL1yT0IeDhH?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div class="flower-border-frame">
+            <div class="flower-emoji-border" id="flower-top-left">🌸</div>
+            <div class="flower-emoji-border" id="flower-top-right">🌸</div>
+            <div class="flower-emoji-border" id="flower-bottom-left">🌸</div>
+            <div class="flower-emoji-border" id="flower-bottom-right">🌸</div>
+            
+            <div class="spotify-container">
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1xDLSS7UCJ7LL1yT0IeDhH?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
-    </div>
+
+        <div class="nostalgia-section">
+            <h2 class="nostalgia-title" style="color: blueviolet; border-bottom: black; border-radius: 3;">Unlock peak nostalgia...</h2>
+            <div class="video-container">
+                <video class="video-player" src="Raja aur Rani.mp4" controls></video>
+                <video class="video-player" src="tbday.mp4" controls></video>
+            </div>
+        </div>
+        </div>
 
     <script>
         document.getElementById('revealButton').addEventListener('click', () => {
