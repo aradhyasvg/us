@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Surprise for You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+        body {
+            background-color: #e8eaf6;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Allow scrolling by changing height to min-height */
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 0; /* Add padding for scroll space */
+            flex-direction: column;
+        }
+
+        #revealButton {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            background-color: #c5cae9;
+            color: #3f51b5;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        #revealButton:hover {
+            transform: scale(1.05);
+            background-color: #b3b9e0;
+        }
+
+        #mainContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.5s ease-in-out;
+            padding: 20px;
+        }
+
+        #mainContent.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sky-container {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .sky-circle {
+            width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+            position: relative; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .sky-half {
+            position: absolute; top: 0; width: 50%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; color: white; transition: opacity 0.7s ease;
+        }
+
+        #pune-sky { left: 0; background: linear-gradient(to top right, #81d4fa, #4fc3f7); }
+        #bangalore-sky { right: 0; background: linear-gradient(to top left, #4dd0e1, #26c6da); }
+
+        .city-info { text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .city { font-size: 2rem; font-weight: 700; }
+        .weather-icon { font-size: 3.5rem; margin: 10px 0; }
+        .time { font-size: 1.2rem; }
+
+        .sky-circle::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ff8a65, #ff7043, #f44336);
+            opacity: 0; transition: opacity 0.7s ease-in-out;
+        }
+        
+        .sky-container:hover .sky-circle::after { opacity: 1; }
+        .sky-container:hover .sky-half { opacity: 0; }
+        .sky-container:hover .sky-circle { transform: scale(1.05); }
+
+        .heart-symbol {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.5); font-size: 5rem;
+            color: white; text-shadow: 0 0 15px #fff, 0 0 25px #ff8a80;
+            opacity: 0; transition: all 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            pointer-events: none;
+        }
+        
+        .sky-container:hover .heart-symbol { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        .caption {
+            font-size: 1.5rem; color: #5c6bc0; text-align: center;
+        }
+
+        .spotify-container {
+            margin-top: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            /* Adjust width to be responsive */
+            width: 90%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body style="background-color: pink;">
+
+    <button id="revealButton">For my love...</button>
+
+    <div id="mainContent">
+        <div class="sky-container">
+            <div class="sky-circle">
+                <div class="sky-half" id="pune-sky"><div class="city-info"><div class="city">Pune</div><div class="weather-icon">⛅️</div><div class="time" id="pune-time"></div></div></div>
+                <div class="sky-half" id="bangalore-sky"><div class="city-info"><div class="city">Bangalore</div><div class="weather-icon">☀️</div><div class="time" id="bangalore-time"></div></div></div>
+            </div>
+            <div class="heart-symbol">♥</div>
+        </div>
+        <p class="caption">playlist that speaks about us</p>
+
+        <div class="spotify-container">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1xDLSS7UCJ7LL1yT0IeDhH?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('revealButton').addEventListener('click', () => {
+            document.getElementById('revealButton').style.display = 'none';
+            document.getElementById('mainContent').classList.add('visible');
+        });
+        const puneTimeElement = document.getElementById('pune-time');
+        const bangaloreTimeElement = document.getElementById('bangalore-time');
+        function updateTime() {
+            const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+            const currentTime = new Date().toLocaleTimeString('en-US', { ...timeOptions, timeZone: 'Asia/Kolkata' });
+            puneTimeElement.textContent = currentTime;
+            bangaloreTimeElement.textContent = currentTime;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
